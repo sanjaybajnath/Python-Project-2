@@ -1,0 +1,26 @@
+#Solving a system of equations
+
+
+correct_equation = False
+
+while(correct_equation == False):
+    user_input = input("Enter a,b,c,d,e, and f separated by commas.")
+    user_input = user_input.replace(" ","")
+
+    num_list = user_input.split(",")
+    a = float(num_list[0])
+    b = float(num_list[1])
+    c = float(num_list[2])
+    d = float(num_list[3])
+    e = float(num_list[4])
+    f = float(num_list[5])
+
+    print("Your eequations are: ",a,"x+",b,"y =",e)
+    print("and")
+    print(c,"x+",d,"y =",f)
+    ask = input("Are these equations correct? (Y or N)")
+    if(ask == "y" or ask == "Y"):
+        correct_equation = True
+    else:
+        correct_equation = False
+
