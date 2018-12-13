@@ -70,7 +70,12 @@ print (coefficients[0])
 
 #n = number of equation being printed. printEq(0) prints eq1
 def Equation(n):
-    return (system[n][0],"x +",system[n][1],"y =",system[n][2])
+    s = str(system[n][0])
+    s+= "x + "
+    s+= str(system[n][1])
+    s+="y = "
+    s+= str(system[n][2])
+    return (s)
 
 
 #n = number of equation
