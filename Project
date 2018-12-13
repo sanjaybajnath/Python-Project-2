@@ -109,6 +109,7 @@ while(correct_equation == False):
         correct_equation = False
 
 
-print("Multiply Equation 1 by",system[1][0])
-Multiply(0,system[1][0])
+print("Multiply Equation 1 by 1/",system[0][0])
+Multiply(0,(1/system[0][0]))
 print(Equation(0))
+print(Equation(1))
