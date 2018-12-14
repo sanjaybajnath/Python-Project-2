@@ -64,8 +64,6 @@ print (coefficients[0])
 
 
 
-
-
 #Solving a system of equations
 
 #n = number of equation being printed. printEq(0) prints eq1
@@ -83,7 +81,12 @@ def Equation(n):
 def Multiply(n,k):
     for i in range (0,len(system[n])):
         system[n][i] *= k
-
+#n = position of the equation that is being changed
+#k = multiple of equation i being added
+#i = position of equation being added to equation n
+def Add(n,k,i):
+    for a in range(0,len(system[n])):
+        system[n][a] += (k*(system[i][a]))
     
 correct_equation = False
 
@@ -113,3 +116,19 @@ print("Multiply Equation 1 by 1/",system[0][0])
 Multiply(0,(1/system[0][0]))
 print(Equation(0))
 print(Equation(1))
+
+print("Multiply Equation 2 by 1/",system[1][0])
+Multiply(1,(1/system[1][0]))
+print(Equation(0))
+print(Equation(1))
+
+print("Add (-1*Equation 2) to Equation 1.")
+Add(0,-1,1)
+print(Equation(0))
+print(Equation(1))
+
+print("Multiply Equation 1 by 1/",system[0][1])
+Multiply(0,1/system[0][1])
+print(Equation(0))
+print(Equation(1))
+
