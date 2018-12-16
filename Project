@@ -64,9 +64,17 @@ print (coefficients[0])
 
 
 
+
 #Solving a system of equations
 
-#n = number of equation being printed. printEq(0) prints eq1
+#Pauses the program until the user presses Enter.
+def wait_for_user():
+    print()
+    ask_continue = input("Press Enter to continue.")
+    while ask_continue != "":
+        ask_continue = input("Press Enter to continue.")
+
+#Returns an equation in the form of a String.
 def Equation(n):
     s = str(system[n][0])
     s+= "x + "
@@ -76,30 +84,53 @@ def Equation(n):
     return (s)
 
 
-#n = number of equation
-#k = number being multiplied
+#Multiplies an equation by a scalar multiple.
+#n: index in the system of the equation being changed.
+#k: scalar to multiply the equation by.
 def Multiply(n,k):
     for i in range (0,len(system[n])):
         system[n][i] *= k
-#n = position of the equation that is being changed
-#k = multiple of equation i being added
-#i = position of equation being added to equation n
-def Add(n,k,i):
-    for a in range(0,len(system[n])):
-        system[n][a] += (k*(system[i][a]))
-    
+
+#Adds a scalar multiple of one equation to another equation.        
+#arr1 = equation being changed
+#arr2 = equation being added to arr1
+#k = multiple of arr1 being added
+def Add(arr1, arr2, k):
+    for i in range(0,len(arr1)):
+        arr1[i] += (k*arr2[i])
+
+
+#correct_equation is used to verify that program is solving the equation the user wants to solve.    
 correct_equation = False
 
-while(correct_equation == False):
+while(correct_equation==False):
+    #input_bad is used to make sure the user inputs numbers and not other characters.
+    input_bad = True
     user_input = input("Enter a,b,c,d,e, and f separated by commas.")
     user_input = user_input.replace(" ","")
 
     num_list = user_input.split(",")
-    for i in range (len(num_list)):
-        num_list[i] = float(num_list[i])
+    while(input_bad):
+        #not_number is the amount of user entries that are not numbers. 
+        not_number = 0
+        for i in range (len(num_list)):
+            try:
+                num_list[i] = float(num_list[i])
+            except:
+                not_number+=1
+        if(not_number == 0):
+            input_bad = False
+        else:
+            #If there are more than 0 non-floatable characters, the user has to retry. 
+            input_bad = True
+            print("Try again, but with numbers.")
+            user_input = input("Enter a,b,c,d,e, and f separated by commas.")
+            user_input = user_input.replace(" ","")
+            num_list = user_input.split(",")
+    #system is the two dimensional array of the two equations.
     system = []
-    eq1 = [num_list[0],num_list[1],num_list[4]]
-    eq2 = [num_list[2],num_list[3],num_list[5]]
+    eq1 = [num_list[0],num_list[1],num_list[2]]
+    eq2 = [num_list[3],num_list[4],num_list[5]]
     system.append(eq1)
     system.append(eq2)
     print("Your equations are: \n",Equation(0))
@@ -110,25 +141,45 @@ while(correct_equation == False):
         correct_equation = True
     else:
         correct_equation = False
+if(system[0][0]/system[1][0] == system[0][1]/system[1][1]):#bad matrix - all zeros excl last num
+    if(system[0][2]/system[1][2] != system[0][0]/system[1][0]):#No solutions
+        print("no sol")
+    else: #infinitely many solutions
+        print("inf sol")
+else:
+    print("There is one solution to this system of equations.")
+    print()
+    print("Multiply Equation 1 by 1/",system[0][0])
+    Multiply(0,(1/system[0][0]))
+    print(Equation(0))
+    print(Equation(1))
+    wait_for_user()
+
+    print("Multiply Equation 2 by 1/",system[1][0])
+    Multiply(1,(1/system[1][0]))
+    print(Equation(0))
+    print(Equation(1))
+    wait_for_user()
+
+    print("Add (-1*Equation 2) to Equation 1.")
+    Add(system[0],system[1],-1)
+    print(Equation(0))
+    print(Equation(1))
+    wait_for_user()
+
+    print("Multiply Equation 1 by 1/",system[0][1])
+    Multiply(0,1/system[0][1])
+    print(Equation(0))
+    print(Equation(1))
+    wait_for_user()
+
+    print ("Add -(",system[1][1],")/(",system[0][1],")*Equation 1 to equation 2.")
+    Add(system[1], system[0], -1*(system[1][1])/system[0][1])
+    print(Equation(0))
+    print(Equation(1))
+    wait_for_user()
+
+    print("The solution is: (",system[1][2],",",system[0][2],")")
 
 
-print("Multiply Equation 1 by 1/",system[0][0])
-Multiply(0,(1/system[0][0]))
-print(Equation(0))
-print(Equation(1))
-
-print("Multiply Equation 2 by 1/",system[1][0])
-Multiply(1,(1/system[1][0]))
-print(Equation(0))
-print(Equation(1))
-
-print("Add (-1*Equation 2) to Equation 1.")
-Add(0,-1,1)
-print(Equation(0))
-print(Equation(1))
-
-print("Multiply Equation 1 by 1/",system[0][1])
-Multiply(0,1/system[0][1])
-print(Equation(0))
-print(Equation(1))
 
