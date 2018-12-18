@@ -63,9 +63,14 @@ print (coefficients[0])
 
 
 
+#Sanjay Bajnath
+#Python Project 2- Solving a System
 
+#Known Bugs:
+#   -The program does not work properly if coefficients are 0.
+#   -The program does not round correctly sometimes
+#       Example: 2,3,4,5,6,7 returns ( -1.000000000000001 , 2.000000000000001 ) instead of (-1,2)
 
-#Solving a system of equations
 
 #Pauses the program until the user presses Enter.
 def wait_for_user():
@@ -74,7 +79,9 @@ def wait_for_user():
     while ask_continue != "":
         ask_continue = input("Press Enter to continue.")
 
+
 #Returns an equation in the form of a String.
+#n: index of the equation in the system
 def Equation(n):
     s = str(system[n][0])
     s+= "x + "
@@ -106,7 +113,7 @@ correct_equation = False
 while(correct_equation==False):
     #input_bad is used to make sure the user inputs numbers and not other characters.
     input_bad = True
-    user_input = input("Enter a,b,c,d,e, and f separated by commas.")
+    user_input = input("Enter a,b,e,c,d, and f separated by commas.")
     user_input = user_input.replace(" ","")
 
     num_list = user_input.split(",")
@@ -124,7 +131,7 @@ while(correct_equation==False):
             #If there are more than 0 non-floatable characters, the user has to retry. 
             input_bad = True
             print("Try again, but with numbers.")
-            user_input = input("Enter a,b,c,d,e, and f separated by commas.")
+            user_input = input("Enter a,b,e,c,d, and f separated by commas.")
             user_input = user_input.replace(" ","")
             num_list = user_input.split(",")
     #system is the two dimensional array of the two equations.
@@ -141,14 +148,17 @@ while(correct_equation==False):
         correct_equation = True
     else:
         correct_equation = False
-if(system[0][0]/system[1][0] == system[0][1]/system[1][1]):#bad matrix - all zeros excl last num
+
+#The coefficients of equation 1 are scalar multiples of the coefficients of equation 2. This leads to either no solutions or infinitely many solutions.
+if(system[0][0]/system[1][0] == system[0][1]/system[1][1]): 
     if(system[0][2]/system[1][2] != system[0][0]/system[1][0]):#No solutions
-        print("no sol")
-    else: #infinitely many solutions
-        print("inf sol")
+        print("There are no solutions to this system of equations.")
+    else: 
+        print("There are infinitely many solutions to this system of equations.")
 else:
     print("There is one solution to this system of equations.")
     print()
+    #If there is only one solution, the program solves for it.
     print("Multiply Equation 1 by 1/",system[0][0])
     Multiply(0,(1/system[0][0]))
     print(Equation(0))
